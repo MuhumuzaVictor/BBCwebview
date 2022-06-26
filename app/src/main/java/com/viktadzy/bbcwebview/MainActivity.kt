@@ -1,18 +1,29 @@
 package com.viktadzy.bbcwebview
 
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.webkit.WebView
+import android.webkit.WebViewClient
+
 
 class MainActivity : AppCompatActivity() {
+    private val web :WebView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val signupbtn = findViewById<Button>(R.id.loginbutton)
-        signupbtn.setOnClickListener{
-            val n = Intent(this,SignUpActivity::class.java)
-            startActivity(n)
+
+        val web = findViewById<WebView>(R.id.webview)
+        web.webViewClient = WebViewClient()
+        web.loadUrl("https://www.bbc.com/")
+        val webSettings=web.settings
+        webSettings.javaScriptEnabled=true
+    }
+
+    override fun onBackPressed() {
+        if (web!!.canGoBack()){
+            web.goBack()
         }
+        super.onBackPressed()
     }
 }
